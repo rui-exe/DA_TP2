@@ -9,5 +9,10 @@ int main() {
    for(auto iter=path.begin();iter!=path.end();iter++){
       cout << "Node " << *iter<< endl;
    }
+  list<int> stops_changes = dataset.unweighted_path(1,dataset.n);
+  cout<<"Path:"<<endl;
+  for(auto iter=stops_changes.begin();iter!=stops_changes.end();iter++)
+    cout << "Node " << *iter<< endl;
+
    return 0;
 }

@@ -27,7 +27,7 @@ void Graph::bfs(int v) {
     nodes[v].visited = true;
     while (!q.empty()) { // while there are still unvisited nodes
         int u = q.front(); q.pop();
-        for (auto &e : nodes[u].adj) {
+        for (Edge &e : nodes[u].adj) {
             int w = e.dest;
             int remaining_capacity = e.capacity-e.flow;
             if (!nodes[w].visited && remaining_capacity>0) {
@@ -58,6 +58,7 @@ int Graph::update_flows(int src,int sink){
     dest = sink;
 
     while(dest!=src){ //find bottleneck
+        int capacity = nodes[dest].incoming_edge->capacity;
         nodes[dest].incoming_edge->flow+=bottleneck;
         nodes[dest].incoming_edge->symmetric_edge->flow-=bottleneck;
         dest=nodes[dest].pred;
@@ -66,13 +67,23 @@ int Graph::update_flows(int src,int sink){
     return bottleneck;
 }
 
-void Graph::print_path(int i){
+void Graph::print_path(pair<list<int>,int> group){
+    int i = group.first.back();
+    if(i==n){
+        cout << "Group with " << group.second << " people's path: ";
+        for(auto iter=group.first.begin();iter!=group.first.end();iter++){
+            cout << *iter << " ";
+        }
+        cout << endl;
+    }
     for(const Edge &e:nodes[i].adj){
         if(e.flow>0){
-            nodes[e.dest].peopleInGroup+=e.flow;
-            if(nodes[i].peopleInGroup>=e.flow)
-                cout << e.flow   << " people from node " << i << " to node " << e.dest << endl;
-            print_path(e.dest);
+            pair<list<int>,int> new_group;
+            list<int> new_path = group.first;
+            new_path.push_back(e.dest);
+            new_group.first=new_path;
+            new_group.second=min(group.second,e.flow);
+            print_path(new_group);
         }
     }
 }
@@ -88,11 +99,13 @@ int Graph::edmonds_karp(int src, int sink){
         max_flow += update_flows(src,sink);
     }
 
-    for(int i=1;i<=n;i++)
-        nodes[i].peopleInGroup=0;
 
-    nodes[src].peopleInGroup=max_flow;
-    print_path(src);
+    pair<list<int>,int> group;
+    list<int>path;
+    path.push_back(src);
+    group.first=path;
+    group.second=max_flow;
+    print_path(group);
     return max_flow;
 }
 int Graph::dijkstra(int a, int b) {
@@ -130,6 +143,19 @@ list<int> Graph::dijkstra_path(int a, int b) {
         dest = nodes[dest].pred_d;
     }
     path.push_front(a);
+    return path;
+}
+list<int> Graph::unweighted_path(int a,int b){
+    list<int> path;
+    bfs(a);
+    if(!nodes[b].visited)
+        return path;
+    int dest = b;
+    while(dest!=a){
+        path.push_front(dest);
+        dest=nodes[dest].pred;
+    }
+    path.push_front(dest);
     return path;
 }
 

@@ -45,7 +45,7 @@ public:
     void addEdge(int src, int dest, int capacity,int duration=0);
     void bfs(int v);
 
-    void print_path(int i);
+    void print_path(pair<list<int>,int> group);
 
     int edmonds_karp(int src, int sink);
 
@@ -58,6 +58,7 @@ public:
     int update_flows(int src,int sink);
     int dijkstra(int a, int b);
     list<int> dijkstra_path(int a, int b);
+    list<int> unweighted_path(int a,int b);
 };
 
 #endif
