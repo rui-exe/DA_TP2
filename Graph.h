@@ -6,6 +6,7 @@
 #include <vector>
 #include <queue>
 #include <iostream>
+#include "minHeap.h"
 
 using namespace std;
 
@@ -26,6 +27,9 @@ public:
         bool visited;
         int unweighted_distance;
         int pred;
+        int dist;
+        int pred_d;
+        int peopleInGroup;
         Edge* incoming_edge;
     };
 
@@ -41,7 +45,7 @@ public:
     void addEdge(int src, int dest, int capacity,int duration=0);
     void bfs(int v);
 
-    void print_path(int i, int peopleInGroup);
+    void print_path(int i);
 
     int edmonds_karp(int src, int sink);
 
@@ -52,6 +56,8 @@ public:
      * @return list of integers that represent the best path from node a to node b
      */
     int update_flows(int src,int sink);
+    int dijkstra(int a, int b);
+    list<int> dijkstra_path(int a, int b);
 };
 
 #endif

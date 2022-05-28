@@ -66,15 +66,13 @@ int Graph::update_flows(int src,int sink){
     return bottleneck;
 }
 
-void Graph::print_path(int i,int peopleInGroup){
-    if(i==n) {
-        cout << "Fim deste grupo" <<endl;
-        return;
-    }
-    cout << peopleInGroup << " people in node " << i << endl;
+void Graph::print_path(int i){
     for(const Edge &e:nodes[i].adj){
-        if(e.flow>0 && peopleInGroup-e.flow>0){
-            print_path(e.dest,peopleInGroup-e.flow);
+        if(e.flow>0){
+            nodes[e.dest].peopleInGroup+=e.flow;
+            if(nodes[i].peopleInGroup>=e.flow)
+                cout << e.flow   << " people from node " << i << " to node " << e.dest << endl;
+            print_path(e.dest);
         }
     }
 }
@@ -90,9 +88,49 @@ int Graph::edmonds_karp(int src, int sink){
         max_flow += update_flows(src,sink);
     }
 
-    print_path(src,max_flow);
+    for(int i=1;i<=n;i++)
+        nodes[i].peopleInGroup=0;
 
+    nodes[src].peopleInGroup=max_flow;
+    print_path(src);
     return max_flow;
+}
+int Graph::dijkstra(int a, int b) {
+    for(int i=1;i<nodes.size();i++){
+        this->nodes[i].dist = 0;
+        this->nodes[i].visited=false;
+    }
+    this->nodes[a].dist=INT32_MAX/2;
+    nodes[a].pred_d=a;
+    MinHeap<int,int> m(nodes.size()-1,-1);
+    for(int i=1;i<nodes.size();i++){
+        m.insert(i,-nodes[i].dist);
+    }
+    while(m.getSize()>0){
+        int c = m.removeMin();
+        nodes[c].visited = true;
+        for(Edge e:nodes[c].adj){
+            if (min(nodes[c].dist,e.capacity)>nodes[e.dest].dist) {
+                nodes[e.dest].dist= min(nodes[c].dist,e.capacity);
+                nodes[e.dest].pred_d=c;
+                m.decreaseKey(e.dest,-nodes[e.dest].dist);
+            }
+        }
+    }
+    return -nodes[b].dist==INT32_MAX?-1:nodes[b].dist;
+}
+list<int> Graph::dijkstra_path(int a, int b) {
+    list<int> path;
+    int x = dijkstra(a,b);
+    if(x==-1) return path;
+    cout<< "Max Flow = "<< x<<endl;
+    int dest = b;
+    while(dest!=a){
+        path.push_front(dest);
+        dest = nodes[dest].pred_d;
+    }
+    path.push_front(a);
+    return path;
 }
 
 

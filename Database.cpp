@@ -10,7 +10,7 @@ Database::Database(const string &number){
     int num_nodes,num_edges;
     input_file.open("Tests/in"+number+".txt");
     if(!input_file.is_open()){
-        cout << "Error opening file " << "Tests/in"+number+".txt" << endl;
+        cout << "Error opening file " << "Tests_B/in"+number+"_b.txt" << endl;
     }
     else {
         getline(input_file, line);
