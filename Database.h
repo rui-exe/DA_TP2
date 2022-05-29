@@ -15,6 +15,7 @@ private:
     Graph dataset=Graph(0,true);
 public:
     Database(const string &number);
+    Database()=default;
     Graph getDataset() const;
 };
 

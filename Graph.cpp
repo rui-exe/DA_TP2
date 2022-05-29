@@ -169,6 +169,7 @@ int Graph::dijkstra(int a, int b) {
                 nodes[e.dest].pred_d=c;
                 m.decreaseKey(e.dest,{-nodes[e.dest].dist,nodes[e.dest].num_edges});
             }
+
             else if(min(nodes[c].dist,e.capacity)==nodes[e.dest].dist && e.capacity>0){
                 if(nodes[c].num_edges+1<nodes[e.dest].num_edges){
                     nodes[e.dest].dist= min(nodes[c].dist,e.capacity);
@@ -177,6 +178,7 @@ int Graph::dijkstra(int a, int b) {
                     m.decreaseKey(e.dest,{-nodes[e.dest].dist,nodes[e.dest].num_edges});
                 }
             }
+            
         }
     }
     return -nodes[b].dist==INT32_MAX?-1:nodes[b].dist;
