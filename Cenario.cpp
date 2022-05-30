@@ -13,10 +13,13 @@ void Cenario::Cenario_1_1() {
     dataset = db.getDataset();
     cout << endl<< endl<<"1.1"<<endl <<endl;
     cout<<"Path: Max Flow"<<endl;
+    auto start = chrono::steady_clock::now();
     list<int> path = dataset.dijkstra_path(1, dataset.n);
     for(auto iter=path.begin();iter!=path.end();iter++){
         cout << "Node " << *iter<< endl;
     }
+    auto end = chrono::steady_clock::now();
+    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
 
 void Cenario::Cenario_1_2() {
@@ -30,9 +33,13 @@ void Cenario::Cenario_1_2() {
     }
     cout<<endl;
     cout<<"Path: Menos Transbordos"<<endl;
+    auto start = chrono::steady_clock::now();
     list<int> stops_changes = dataset.unweighted_path(1,dataset.n);
     for(auto iter=stops_changes.begin();iter!=stops_changes.end();iter++)
         cout << "Node " << *iter<< endl;
+    auto end = chrono::steady_clock::now();
+    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
+
 }
 
 void Cenario::Cenario_2_1() {
@@ -41,8 +48,11 @@ void Cenario::Cenario_2_1() {
     cout<<"Qual a dimensao do grupo desejada: "; cin>>dimension;
     cout << endl<< endl<<"2.1"<<endl <<endl;
     dataset.addEdge(0,1,dimension,0);
-
+    auto start = chrono::steady_clock::now();
     cout <<dataset.edmonds_karp(0,dataset.n) << endl;
+    auto end = chrono::steady_clock::now();
+    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
+
 }
 
 void Cenario::Cenario_2_2() {
@@ -52,20 +62,27 @@ void Cenario::Cenario_2_2() {
 void Cenario::Cenario_2_3() {
     dataset = db.getDataset();
     cout<<endl<<endl<<"2.3"<<endl <<endl;
+    auto start = chrono::steady_clock::now();
     cout <<dataset.edmonds_karp(1,dataset.n) << endl;
+    auto end = chrono::steady_clock::now();
+    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
 
 void Cenario::Cenario_2_4() {
     dataset = db.getDataset();
     dataset.edmonds_karp(1,dataset.n);
     cout<<endl<<endl<<"2.4"<<endl <<endl;
+    auto start = chrono::steady_clock::now();
     int durMin = dataset.criticalPath();
     cout << durMin << endl;
+    auto end = chrono::steady_clock::now();
+    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
 
 void Cenario::Cenario_2_5() {
     dataset = db.getDataset();
     dataset.edmonds_karp(1,dataset.n);
+    auto start = chrono::steady_clock::now();
     int durMin = dataset.criticalPath();
     cout<< endl<<endl<<"2.5"<<endl <<endl;
     dataset.getLF(durMin);
@@ -76,4 +93,6 @@ void Cenario::Cenario_2_5() {
         cout << "Node " << *iter << endl;
 
     }
+    auto end = chrono::steady_clock::now();
+    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
