@@ -48,11 +48,16 @@ void Cenario::Cenario_2_1() {
     cout<<"Qual a dimensao do grupo desejada: "; cin>>dimension;
     cout << endl<< endl<<"2.1"<<endl <<endl;
     dataset.addEdge(0,1,dimension,0);
-    auto start = chrono::steady_clock::now();
-    cout <<dataset.edmonds_karp(0,dataset.n) << endl;
-    auto end = chrono::steady_clock::now();
-    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 
+
+    int max_flow = dataset.edmonds_karp(0,dataset.n);
+    cout << max_flow << endl;
+    pair<list<int>,int> group;
+    list<int>path;
+    path.push_back(0);
+    group.first=path;
+    group.second=max_flow;
+    dataset.print_path(group);
 }
 
 void Cenario::Cenario_2_2() {
@@ -62,10 +67,14 @@ void Cenario::Cenario_2_2() {
 void Cenario::Cenario_2_3() {
     dataset = db.getDataset();
     cout<<endl<<endl<<"2.3"<<endl <<endl;
-    auto start = chrono::steady_clock::now();
-    cout <<dataset.edmonds_karp(1,dataset.n) << endl;
-    auto end = chrono::steady_clock::now();
-    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
+    int max_flow = dataset.edmonds_karp(1,dataset.n);
+    cout << max_flow << endl;
+    pair<list<int>,int> group;
+    list<int>path;
+    path.push_back(1);
+    group.first=path;
+    group.second=max_flow;
+    dataset.print_path(group);
 }
 
 void Cenario::Cenario_2_4() {
