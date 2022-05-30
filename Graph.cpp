@@ -138,12 +138,6 @@ int Graph::edmonds_karp(int src, int sink){
     }
 
 
-    pair<list<int>,int> group;
-    list<int>path;
-    path.push_back(src);
-    group.first=path;
-    group.second=max_flow;
-    print_path(group);
     return max_flow;
 }
 int Graph::dijkstra(int a, int b) {
