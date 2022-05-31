@@ -80,14 +80,12 @@ void Cenario::Cenario_2_4() {
 void Cenario::Cenario_2_5() {
     dataset = db.getDataset();
     dataset.edmonds_karp(1,dataset.n);
-    int durMin = dataset.criticalPath();
+    dataset.criticalPath();
     cout<< endl<<endl<<"2.5"<<endl <<endl;
-    dataset.getLF(durMin);
     dataset.putInfoOnEdges();
     pair<int,list<int>> waiting_nodes = dataset.getMaxWaitingTime();
     cout << "People waited " << waiting_nodes.first << " hours in the following nodes" << endl;
     for(auto iter=waiting_nodes.second.begin();iter!=waiting_nodes.second.end();iter++){
         cout << "Node " << *iter << endl;
-
     }
 }

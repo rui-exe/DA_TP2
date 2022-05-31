@@ -26,9 +26,7 @@ public:
         int capacity;
         int duration;
         int es;
-        int ls;
         int ef;
-        int lf;
         int fs;
         Edge* symmetric_edge;
     };
@@ -77,9 +75,6 @@ public:
      */
     list<int> unweighted_path(int a,int b);
     int criticalPath();
-    void getLF(int durMin);
-
-    Graph getTransposed();
     void putInfoOnEdges();
     pair<int,list<int>> getMaxWaitingTime();
 };

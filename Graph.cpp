@@ -172,7 +172,7 @@ int Graph::dijkstra(int a, int b) {
                     m.decreaseKey(e.dest,{-nodes[e.dest].dist,nodes[e.dest].num_edges});
                 }
             }
-            
+
         }
     }
     return -nodes[b].dist==INT32_MAX?-1:nodes[b].dist;
@@ -253,58 +253,6 @@ int Graph::criticalPath() {
 
     return durMin;
 }
-Graph Graph::getTransposed(){
-    Graph answer(n,true);
-    for(int i=1;i<=n;i++){
-        for(auto e:nodes[i].adj){
-            int w = e.dest;
-            if(e.flow<=0)
-                continue;
-            answer.addEdge(w,i,e.capacity,e.duration);
-            answer.nodes[w].adj.back().flow=e.flow;
-        }
-    }
-    return answer;
-}
-
-void Graph::getLF(int durMin){
-    for(int i=1;i<=n;i++){
-        nodes[i].out_degree=0;
-        nodes[i].lf=durMin;
-    }
-    for(int i=1;i<=n;i++){
-        for(auto e:nodes[i].adj){
-            if(e.flow<=0)
-                continue;
-            nodes[i].out_degree++;
-        }
-    }
-
-    queue<int> s;
-    for(int i=1;i<=n;i++){
-        if(nodes[i].out_degree == 0)
-            s.push(i);
-    }
-
-    while(!s.empty()){
-        auto v = s.front();
-        s.pop();
-        if(nodes[v].es>durMin)
-            durMin=nodes[v].es;
-        Graph transposed = getTransposed();
-        for(auto e:transposed.nodes[v].adj){
-            if(e.flow<=0)
-                continue;
-            auto w = e.dest;
-
-            if(nodes[w].lf>nodes[v].lf-e.duration)
-                nodes[w].lf=nodes[v].lf-e.duration;
-
-            if(--nodes[w].out_degree == 0)
-                s.push(w);
-        }
-    }
-}
 
 void Graph::putInfoOnEdges(){
     for(int i=1;i<=n;i++){
@@ -312,8 +260,6 @@ void Graph::putInfoOnEdges(){
             if(e.flow>0){
                 e.es=nodes[i].es;
                 e.ef=e.es+e.duration;
-                e.lf=nodes[e.dest].lf;
-                e.ls=e.lf-e.duration;
             }
         }
     }
