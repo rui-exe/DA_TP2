@@ -44,7 +44,7 @@ void menu(Cenario c){
                 break;
         }
         cout << endl;
-    }while(!cin.fail() && opcao2!=8);
+    }while(!cin.fail() && opcao2!=8 && !cin.eof());
 }
 
 int main() {
@@ -54,9 +54,9 @@ int main() {
         cout << endl;
         cout << "Escolha o grafo (01 to 10) ou insira z para sair: ";
         cin >> opcao;
-        if(opcao=="z") return 0;
+        if(opcao=="z" || cin.eof()) return 0;
         c = Cenario(opcao);
         menu(c);
-    }while(!cin.fail());
+    }while(!cin.fail() && !cin.eof());
     return 0;
 }

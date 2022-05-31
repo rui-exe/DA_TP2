@@ -4,7 +4,9 @@
 
 #ifndef DA_TP2_CENARIO_H
 #define DA_TP2_CENARIO_H
+
 #include "Database.h"
+#include <chrono>
 
 class Cenario {
 private:
