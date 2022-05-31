@@ -84,9 +84,9 @@ void Cenario::Cenario_2_3() {
 
 void Cenario::Cenario_2_4() {
     dataset = db.getDataset();
+    auto start = chrono::steady_clock::now();
     dataset.edmonds_karp(1,dataset.n);
     cout<<endl<<endl<<"2.4"<<endl <<endl;
-    auto start = chrono::steady_clock::now();
     int durMin = dataset.criticalPath();
     cout <<"Tempo total de demora: "<< durMin <<" horas." <<endl;
     auto end = chrono::steady_clock::now();
