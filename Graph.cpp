@@ -140,6 +140,37 @@ int Graph::edmonds_karp(int src, int sink){
 
     return max_flow;
 }
+
+
+
+
+Graph Graph::createRestrictedGraph(int maxEdges){
+    Graph restrictedGraph(n*(maxEdges+1),true);
+    for(int u=1;u<=n;u++){
+        for(Edge e:nodes[u].adj){
+            int v = e.dest;
+            for(int b=0;b<=maxEdges;b++){
+                if(b+1<=maxEdges){
+                    restrictedGraph.addEdge((u-1)*maxEdges+b+1,((v-1)*maxEdges+b+1)+1,e.capacity);
+                }
+            }
+        }
+    }
+
+    return restrictedGraph;
+}
+
+void Graph::showParetoOptimalPaths(){
+    dijkstra(1,n);
+    unsigned maxEdges = nodes[n].num_edges;
+    Graph restrictedGraph = createRestrictedGraph(maxEdges);
+    for(int i=0;i<=maxEdges;i++){
+        cout << "Distance using " << i << "edges: " << restrictedGraph.dijkstra(1,(n-1)*maxEdges+i+1) << endl;
+    }
+}
+
+
+
 int Graph::dijkstra(int a, int b) {
     for(int i=0;i<nodes.size();i++){
         this->nodes[i].dist = 0;

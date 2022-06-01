@@ -6,6 +6,7 @@
 #include <vector>
 #include <queue>
 #include <iostream>
+#include <map>
 #include "minHeap.h"
 
 using namespace std;
@@ -38,11 +39,8 @@ public:
         int pred;
         int dist;
         int pred_d;
-        int peopleInGroup;
         int es;
-        int lf;
         int in_degree;
-        int out_degree;
         int num_edges;
         Edge* incoming_edge;
     };
@@ -63,8 +61,11 @@ public:
 
     int edmonds_karp(int src, int sink);
 
+    Graph createRestrictedGraph(int n);
 
+    void showParetoOptimalPaths();
     int update_flows(int src,int sink);
+    int dijkstra2(int a, int b, int maxEdges);
     int dijkstra(int a, int b);
     list<int> dijkstra_path(int a, int b);
     /**

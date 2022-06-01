@@ -24,6 +24,10 @@ void Cenario::Cenario_1_1() {
 
 void Cenario::Cenario_1_2() {
     dataset = db.getDataset();
+
+    dataset.showParetoOptimalPaths();
+
+    /*
     cout << endl<< endl<<"1.2"<<endl <<endl;
 
     cout<<"Path: Max Flow"<<endl;
@@ -39,6 +43,7 @@ void Cenario::Cenario_1_2() {
     for(auto iter=stops_changes.begin();iter!=stops_changes.end();iter++)
         cout << "Node " << *iter<< endl;
     cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
+    */
 
 }
 

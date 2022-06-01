@@ -8,7 +8,7 @@ Database::Database(const string &number){
     ifstream input_file;
     string line;
     int num_nodes,num_edges;
-    input_file.open("Tests_B/in"+number+"_b.txt");
+    input_file.open("Tests/in"+number+".txt");
     if(!input_file.is_open()){
         cout << "Error opening file " << "Tests_B/in"+number+"_b.txt" << endl;
     }
