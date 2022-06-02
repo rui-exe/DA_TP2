@@ -41,6 +41,7 @@ public:
         int pred_d;
         int es;
         int in_degree;
+        int real_node;
         int num_edges;
         Edge* incoming_edge;
     };
@@ -65,7 +66,10 @@ public:
 
     void showParetoOptimalPaths();
     int update_flows(int src,int sink);
-    int dijkstra2(int a, int b, int maxEdges);
+
+    void dijkstra2(int a);
+    list<int> dijkstra_path2(int a,int b);
+
     int dijkstra(int a, int b);
     list<int> dijkstra_path(int a, int b);
     /**

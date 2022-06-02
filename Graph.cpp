@@ -146,12 +146,17 @@ int Graph::edmonds_karp(int src, int sink){
 
 Graph Graph::createRestrictedGraph(int maxEdges){
     Graph restrictedGraph(n*(maxEdges+1),true);
+
+    for(int u=1;u<=n*(maxEdges+1);u++){
+        restrictedGraph.nodes[u].real_node=((u-1)/(maxEdges+1))+1;
+    }
+
     for(int u=1;u<=n;u++){
         for(Edge e:nodes[u].adj){
             int v = e.dest;
             for(int b=0;b<=maxEdges;b++){
                 if(b+1<=maxEdges){
-                    restrictedGraph.addEdge((u-1)*maxEdges+b+1,((v-1)*maxEdges+b+1)+1,e.capacity);
+                    restrictedGraph.addEdge((u-1)*(maxEdges+1)+1+b,((v-1)*(maxEdges+1)+1+b)+1,e.capacity);
                 }
             }
         }
@@ -161,12 +166,80 @@ Graph Graph::createRestrictedGraph(int maxEdges){
 }
 
 void Graph::showParetoOptimalPaths(){
+    bfs2(1);
+    int minEdges=nodes[n].unweighted_distance;
     dijkstra(1,n);
     unsigned maxEdges = nodes[n].num_edges;
     Graph restrictedGraph = createRestrictedGraph(maxEdges);
-    for(int i=0;i<=maxEdges;i++){
-        cout << "Distance using " << i << "edges: " << restrictedGraph.dijkstra(1,(n-1)*maxEdges+i+1) << endl;
+    int src=1;
+    restrictedGraph.dijkstra2(src);
+    int lastCapacity=INT32_MIN/2;
+    for(int i=minEdges;i<=maxEdges;i++){
+        int dest = (n-1)*(maxEdges+1)+1 +i; //node (dest,i) of restrictedGraph
+        int currentCapacity = restrictedGraph.nodes[dest].dist;
+        if(currentCapacity>lastCapacity){
+            lastCapacity = currentCapacity;
+            cout << "Path with  " << i - 1 << " transshipments - " << "flow = " << currentCapacity << endl;
+            list<int> path = restrictedGraph.dijkstra_path2(src, dest);
+            for (auto iter = path.begin(); iter != path.end(); iter++) {
+                if (*iter != *--path.end())
+                    cout << "Node " << restrictedGraph.nodes[*iter].real_node << ", ";
+                else
+                    cout << "Node " << restrictedGraph.nodes[*iter].real_node;
+            }
+            cout << endl;
+            cout << endl;
+       }
     }
+}
+
+void Graph::dijkstra2(int a){
+    for(int i=0;i<nodes.size();i++){
+        this->nodes[i].dist = 0;
+        this->nodes[i].num_edges = INT32_MAX/2;
+        this->nodes[i].visited=false;
+    }
+    this->nodes[a].dist=INT32_MAX/2;
+    this->nodes[a].num_edges=0;
+    nodes[a].pred_d=a;
+    MinHeap<int,capacity_stops> m(nodes.size()-1,-1);
+    for(int i=0;i<nodes.size();i++){
+        m.insert(i,{-nodes[i].dist,nodes[i].num_edges});
+    }
+    while(m.getSize()>0){
+        int c = m.removeMin();
+        nodes[c].visited = true;
+        for(Edge e:nodes[c].adj){
+            if (min(nodes[c].dist,e.capacity)>nodes[e.dest].dist && e.capacity>0) {
+                nodes[e.dest].dist= min(nodes[c].dist,e.capacity);
+                nodes[e.dest].num_edges=nodes[c].num_edges+1;
+                nodes[e.dest].pred_d=c;
+                m.decreaseKey(e.dest,{-nodes[e.dest].dist,nodes[e.dest].num_edges});
+            }
+
+            else if(min(nodes[c].dist,e.capacity)==nodes[e.dest].dist && e.capacity>0){
+                if(nodes[c].num_edges+1<nodes[e.dest].num_edges){
+                    nodes[e.dest].dist= min(nodes[c].dist,e.capacity);
+                    nodes[e.dest].num_edges=nodes[c].num_edges+1;
+                    nodes[e.dest].pred_d=c;
+                    m.decreaseKey(e.dest,{-nodes[e.dest].dist,nodes[e.dest].num_edges});
+                }
+            }
+
+        }
+    }
+}
+
+list<int> Graph::dijkstra_path2(int a,int b){
+    list<int> path;
+    if(nodes[b].dist==INT32_MAX/2) return path;
+    int dest = b;
+    while(dest!=a){
+        path.push_front(dest);
+        dest = nodes[dest].pred_d;
+    }
+    path.push_front(a);
+    return path;
 }
 
 
@@ -208,6 +281,7 @@ int Graph::dijkstra(int a, int b) {
     }
     return -nodes[b].dist==INT32_MAX?-1:nodes[b].dist;
 }
+
 list<int> Graph::dijkstra_path(int a, int b) {
     list<int> path;
     int x = dijkstra(a,b);
