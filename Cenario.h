@@ -15,6 +15,7 @@ private:
 public:
     Cenario()= default;
     Cenario(string number);
+    void correctRoute(Graph routeGraph,int previous_flow,int n);
     void Cenario_1_1();
     void Cenario_1_2();
     void Cenario_2_1();

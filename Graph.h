@@ -42,6 +42,7 @@ public:
         int es;
         int in_degree;
         int real_node;
+        int route_graph_node;
         int num_edges;
         Edge* incoming_edge;
     };
@@ -58,13 +59,20 @@ public:
     void addEdge(int src, int dest, int capacity,int duration=0);
     void bfs(int v);
     void bfs2(int v);
+    void bfs3(int v);
+
     void print_path(pair<list<int>,int> group);
+    void print_path2(pair<list<int>,int> group);
 
     int edmonds_karp(int src, int sink);
 
-    Graph createRestrictedGraph(int n);
+    Graph createRestrictedGraph(int maxEdges);
 
     void showParetoOptimalPaths();
+
+    Graph createRouteGraph();
+    void correctRoute(Graph routeGraph,int n);
+
     int update_flows(int src,int sink);
 
     void dijkstra2(int a);

@@ -23,28 +23,19 @@ void Cenario::Cenario_1_1() {
 }
 
 void Cenario::Cenario_1_2() {
+    cout << endl<< endl<<"1.2"<<endl <<endl;
+
     dataset = db.getDataset();
+
+
+    auto start = chrono::steady_clock::now();
 
     dataset.showParetoOptimalPaths();
 
-    /*
-    cout << endl<< endl<<"1.2"<<endl <<endl;
-
-    cout<<"Path: Max Flow"<<endl;
-    list<int> path = dataset.dijkstra_path(1, dataset.n);
-    for(auto iter=path.begin();iter!=path.end();iter++){
-        cout << "Node " << *iter<< endl;
-    }
-    cout<<endl;
-    cout<<"Path: Menos Transbordos"<<endl;
-    auto start = chrono::steady_clock::now();
-    list<int> stops_changes = dataset.unweighted_path(1,dataset.n);
     auto end = chrono::steady_clock::now();
-    for(auto iter=stops_changes.begin();iter!=stops_changes.end();iter++)
-        cout << "Node " << *iter<< endl;
-    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
-    */
 
+
+    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
 
 void Cenario::Cenario_2_1() {
@@ -68,6 +59,42 @@ void Cenario::Cenario_2_1() {
 
 void Cenario::Cenario_2_2() {
     dataset = db.getDataset();
+    int dimension,added_people;
+    cout<<"Qual a dimensao do grupo desejada: "; cin>>dimension;
+    cout<<"Quantas pessoas quer adicionar ao grupo?: "; cin>>added_people;
+
+    dataset.addEdge(0,1,dimension,0);
+    int max_flow = dataset.edmonds_karp(0,dataset.n);
+    cout << max_flow << endl;
+    pair<list<int>,int> group;
+    list<int>path;
+    path.push_back(0);
+    group.first=path;
+    group.second=max_flow;
+    cout << "Original route: " << endl;
+    dataset.print_path(group);
+    cout << endl;
+    Graph routeGraph = dataset.createRouteGraph();
+    correctRoute(routeGraph,max_flow,added_people);
+
+}
+
+void Cenario::correctRoute(Graph routeGraph,int previous_flow,int n){
+    routeGraph.nodes[1].adj.front().capacity+=n;
+    int max_flow = routeGraph.edmonds_karp(1,routeGraph.n);
+    if(max_flow==previous_flow){
+        cout << "Impossible to correct given route!" << endl;
+    }
+    else{
+        cout << "Added " << max_flow-previous_flow << " people to the given route" << endl;
+        cout << "New route:" << endl;
+        pair<list<int>,int> group;
+        list<int>path;
+        path.push_back(1);
+        group.first=path;
+        group.second=max_flow;
+        routeGraph.print_path2(group);
+    }
 }
 
 void Cenario::Cenario_2_3() {
