@@ -128,9 +128,9 @@ int Graph::update_flows(int src,int sink){
     return bottleneck;
 }
 
-void Graph::print_path2(pair<list<int>,int> group){
+void Graph::print_path2(pair<list<int>,int> group,int trg){
     int i = group.first.back();
-    if(i==n){
+    if(i==trg){
         cout << "Group with " << group.second << " people's path: ";
         for(auto iter=group.first.begin();iter!=group.first.end();iter++){
             if(nodes[*iter].real_node>0)
@@ -145,14 +145,14 @@ void Graph::print_path2(pair<list<int>,int> group){
             new_path.push_back(e.dest);
             new_group.first=new_path;
             new_group.second=min(group.second,e.flow);
-            print_path2(new_group);
+            print_path2(new_group,trg);
         }
     }
 }
 
-void Graph::print_path(pair<list<int>,int> group){
+void Graph::print_path(pair<list<int>,int> group,int trg){
     int i = group.first.back();
-    if(i==n){
+    if(i==trg){
         cout << "Group with " << group.second << " people's path: ";
         for(auto iter=group.first.begin();iter!=group.first.end();iter++){
             if(*iter>0)
@@ -167,7 +167,7 @@ void Graph::print_path(pair<list<int>,int> group){
             new_path.push_back(e.dest);
             new_group.first=new_path;
             new_group.second=min(group.second,e.flow);
-            print_path(new_group);
+            print_path(new_group,trg);
         }
     }
 }
@@ -206,17 +206,16 @@ Graph Graph::createRestrictedGraph(int maxEdges){
     return restrictedGraph;
 }
 
-void Graph::showParetoOptimalPaths(){
-    bfs2(1);
-    int minEdges=nodes[n].unweighted_distance;
-    dijkstra(1,n);
-    unsigned maxEdges = nodes[n].num_edges;
+void Graph::showParetoOptimalPaths(int src, int trg){
+    bfs2(src);
+    int minEdges=nodes[trg].unweighted_distance;
+    dijkstra(src,trg);
+    unsigned maxEdges = nodes[trg].num_edges;
     Graph restrictedGraph = createRestrictedGraph(maxEdges);
-    int src=1;
     restrictedGraph.dijkstra2(src);
     int lastCapacity=INT32_MIN/2;
     for(int i=minEdges;i<=maxEdges;i++){
-        int dest = (n-1)*(maxEdges+1)+1 +i; //node (dest,i) of restrictedGraph
+        int dest = (trg-1)*(maxEdges+1)+1 +i; //node (dest,i) of restrictedGraph
         int currentCapacity = restrictedGraph.nodes[dest].dist;
         if(currentCapacity>lastCapacity){
             lastCapacity = currentCapacity;

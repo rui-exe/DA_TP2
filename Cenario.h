@@ -15,14 +15,14 @@ private:
 public:
     Cenario()= default;
     Cenario(string number);
-    void correctRoute(Graph routeGraph,int previous_flow,int n);
-    void Cenario_1_1();
-    void Cenario_1_2();
-    void Cenario_2_1();
-    void Cenario_2_2();
-    void Cenario_2_3();
-    void Cenario_2_4();
-    void Cenario_2_5();
+    void correctRoute(Graph routeGraph,int previous_flow,int n,int trg);
+    void Cenario_1_1(int src, int trg);
+    void Cenario_1_2(int src, int trg);
+    void Cenario_2_1(int src, int trg);
+    void Cenario_2_2(int src, int trg);
+    void Cenario_2_3(int src, int trg);
+    void Cenario_2_4(int src, int trg);
+    void Cenario_2_5(int src, int trg);
 };
 
 

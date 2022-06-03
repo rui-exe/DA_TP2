@@ -2,7 +2,7 @@
 #include "Cenario.h"
 
 void menu(Cenario c){
-    int opcao2;
+    int opcao2,src,trg;
     do {
         cout << endl;
         cout << "Escolha o cenario (1 a 7) ou pressione 8 para sair: " << endl;
@@ -15,27 +15,30 @@ void menu(Cenario c){
         cout << "7: 2.5 - Maximo tempo de espera de um grupo num ou mais locais" << endl;
         cout << "8: Sair" << endl;
         cin >> opcao2;
+        cout << "Indique o nó source: "; cin>>src;
+        cout << "Indique o nó sink: "; cin>>trg;
         switch (opcao2) {
+
             case 1:
-                c.Cenario_1_1();
+                c.Cenario_1_1(src,trg);
                 break;
             case 2:
-                c.Cenario_1_2();
+                c.Cenario_1_2(src,trg);
                 break;
             case 3:
-                c.Cenario_2_1();
+                c.Cenario_2_1(src,trg);
                 break;
             case 4:
-                c.Cenario_2_2();
+                c.Cenario_2_2(src,trg);
                 break;
             case 5:
-                c.Cenario_2_3();
+                c.Cenario_2_3(src,trg);
                 break;
             case 6:
-                c.Cenario_2_4();
+                c.Cenario_2_4(src,trg);
                 break;
             case 7:
-                c.Cenario_2_5();
+                c.Cenario_2_5(src,trg);
                 break;
             case 8:
                 break;

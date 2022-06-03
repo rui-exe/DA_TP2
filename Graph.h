@@ -77,7 +77,7 @@ public:
      * @param group pair containing the path of a group as it's "key"
      * and the number of the group as it's value
      */
-    void print_path(pair<list<int>,int> group);
+    void print_path(pair<list<int>,int> group,int trg);
     /**
      * Algorithm that solves the max flow problem for groups that can separate from each other
      * It calculates the flow for all of edges of the augmenting paths that connect the src to the sink
@@ -100,7 +100,7 @@ public:
      * Function that prints all the pareto optimal alternatives for scenario 1.2.
      * TimeComplexity T(V,E,B) = O(E*B*log(B*V))
      */
-    void showParetoOptimalPaths();
+    void showParetoOptimalPaths(int src, int trg);
     /**
      * Function that is needed for Edmonds-Karp Algorithm
      * It updates the flow of the edges of all augmenting paths until no other augmenting path exists
@@ -125,7 +125,7 @@ public:
      * @param group pair containing the path of a group as it's "key"
      * and the number of the group as it's value
      */
-    void print_path2(pair<list<int>,int> group);
+    void print_path2(pair<list<int>,int> group, int trg);
     /**
      * Creates a graph which only contains nodes where it's incoming edges on the original graph has positive flow.
      * Time Complexity T(V,E) = O(V+E)
