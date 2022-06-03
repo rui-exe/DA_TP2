@@ -24,27 +24,10 @@ void Cenario::Cenario_1_1() {
 
 void Cenario::Cenario_1_2() {
     dataset = db.getDataset();
-
-    dataset.showParetoOptimalPaths();
-
-    /*
-    cout << endl<< endl<<"1.2"<<endl <<endl;
-
-    cout<<"Path: Max Flow"<<endl;
-    list<int> path = dataset.dijkstra_path(1, dataset.n);
-    for(auto iter=path.begin();iter!=path.end();iter++){
-        cout << "Node " << *iter<< endl;
-    }
-    cout<<endl;
-    cout<<"Path: Menos Transbordos"<<endl;
     auto start = chrono::steady_clock::now();
-    list<int> stops_changes = dataset.unweighted_path(1,dataset.n);
+    dataset.showParetoOptimalPaths();
     auto end = chrono::steady_clock::now();
-    for(auto iter=stops_changes.begin();iter!=stops_changes.end();iter++)
-        cout << "Node " << *iter<< endl;
     cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
-    */
-
 }
 
 void Cenario::Cenario_2_1() {
