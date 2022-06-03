@@ -185,9 +185,6 @@ int Graph::edmonds_karp(int src, int sink){
     return max_flow;
 }
 
-
-
-
 Graph Graph::createRestrictedGraph(int maxEdges){
     Graph restrictedGraph(n*(maxEdges+1),true);
 
@@ -364,22 +361,6 @@ Graph Graph::createRouteGraph(){
 
     return routeGraph;
 }
-
-void Graph::correctRoute(Graph routeGraph,int n){
-    routeGraph.nodes[1].adj.front().capacity+=n;
-    int max_flow = routeGraph.edmonds_karp(1,routeGraph.n);
-    pair<list<int>,int> group;
-    list<int>path;
-    path.push_back(1);
-    group.first=path;
-    group.second=max_flow;
-    routeGraph.print_path2(group);
-}
-
-
-
-
-
 
 int Graph::criticalPath() {
 
