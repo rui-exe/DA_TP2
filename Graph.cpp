@@ -58,27 +58,6 @@ void Graph::bfs(int v) {
 }
 
 
-void Graph::bfs3(int v) {
-    nodes[v].unweighted_distance=0;
-    for (int i=0; i<=n; i++)
-        nodes[i].visited = false;
-    queue<int> q; // queue of unvisited nodes
-    q.push(v);
-    nodes[v].visited = true;
-    while (!q.empty()) { // while there are still unvisited nodes
-        int u = q.front(); q.pop();
-        for (auto& e : nodes[u].adj) {
-            int w = e.dest;
-            if (!nodes[w].visited && e.flow>0) {
-                q.push(w);
-                nodes[w].visited = true;
-                nodes[w].unweighted_distance = nodes[u].unweighted_distance+1;
-                nodes[w].pred = u;
-                nodes[w].incoming_edge = &e;
-            }
-        }
-    }
-}
 
 void Graph::bfs2(int v) {
     nodes[v].unweighted_distance=0;
@@ -128,32 +107,11 @@ int Graph::update_flows(int src,int sink){
     return bottleneck;
 }
 
-void Graph::print_path2(pair<list<int>,int> group,int trg){
-    int i = group.first.back();
-    if(i==trg){
-        cout << "Group with " << group.second << " people's path: ";
-        for(auto iter=group.first.begin();iter!=group.first.end();iter++){
-            if(nodes[*iter].real_node>0)
-                cout << nodes[*iter].real_node << " ";
-        }
-        cout << endl;
-    }
-    for(const Edge &e:nodes[i].adj){
-        if(e.flow>0){
-            pair<list<int>,int> new_group;
-            list<int> new_path = group.first;
-            new_path.push_back(e.dest);
-            new_group.first=new_path;
-            new_group.second=min(group.second,e.flow);
-            print_path2(new_group,trg);
-        }
-    }
-}
 
 void Graph::print_path(pair<list<int>,int> group,int trg){
     int i = group.first.back();
     if(i==trg){
-        cout << "Group with " << group.second << " people's path: ";
+        cout << "Caminho do grupo com " << group.second << " pessoas: ";
         for(auto iter=group.first.begin();iter!=group.first.end();iter++){
             if(*iter>0)
                 cout << *iter << " ";
@@ -219,13 +177,13 @@ void Graph::showParetoOptimalPaths(int src, int trg){
         int currentCapacity = restrictedGraph.nodes[dest].dist;
         if(currentCapacity>lastCapacity){
             lastCapacity = currentCapacity;
-            cout << "Path with  " << i - 1 << " transshipments - " << "flow = " << currentCapacity << endl;
+            cout << "Encaminhamento com  " << i - 1 << " transbordos - " << "fluxo = " << currentCapacity << endl;
             list<int> path = restrictedGraph.dijkstra_path2(src, dest);
             for (auto iter = path.begin(); iter != path.end(); iter++) {
                 if (*iter != *--path.end())
-                    cout << "Node " << restrictedGraph.nodes[*iter].real_node << ", ";
+                    cout << "No " << restrictedGraph.nodes[*iter].real_node << ", ";
                 else
-                    cout << "Node " << restrictedGraph.nodes[*iter].real_node;
+                    cout << "No " << restrictedGraph.nodes[*iter].real_node;
             }
             cout << endl;
             cout << endl;
@@ -326,7 +284,7 @@ list<int> Graph::dijkstra_path(int a, int b) {
     list<int> path;
     int x = dijkstra(a,b);
     if(x==-1) return path;
-    cout<< "Flow = "<< x<<endl;
+    cout<< "Fluxo = "<< x<<endl;
     int dest = b;
     while(dest!=a){
         path.push_front(dest);
@@ -336,30 +294,7 @@ list<int> Graph::dijkstra_path(int a, int b) {
     return path;
 }
 
-Graph Graph::createRouteGraph(){
-    bfs3(0);
 
-    Graph routeGraph(0);
-
-
-    for(int i=0;i<=n;i++){
-        if(nodes[i].visited){
-            routeGraph.nodes.push_back({});
-            routeGraph.n++;
-            routeGraph.nodes[routeGraph.n].real_node=i;
-            nodes[i].route_graph_node=routeGraph.n;
-        }
-    }
-
-    for(int i=0;i<=n;i++){
-        for(Edge e:nodes[i].adj){
-            if(e.flow>0)
-                routeGraph.addEdge(nodes[i].route_graph_node,nodes[e.dest].route_graph_node,e.capacity,e.duration);
-        }
-    }
-
-    return routeGraph;
-}
 
 int Graph::criticalPath() {
 
@@ -453,6 +388,13 @@ pair<int,list<int>> Graph::getMaxWaitingTime(){
     return {maxWaitingTime,waiting_nodes};
 }
 
+
+
+int Graph::correctRoute(int src,int trg,int extra){
+    //Assumes the algorithm used for exercise 2.1 was exactly before this
+    nodes[0].adj.back().capacity+=extra;
+    return edmonds_karp(0,trg);
+}
 
 
 

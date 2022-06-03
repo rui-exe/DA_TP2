@@ -12,12 +12,12 @@ Cenario::Cenario(string number){
 void Cenario::Cenario_1_1(int src, int trg) {
     dataset = db.getDataset();
     cout << endl<< endl<<"1.1"<<endl <<endl;
-    cout<<"Path: Max Flow"<<endl;
+    cout<<"Encaminhamento: Fluxo maximo"<<endl;
     auto start = chrono::steady_clock::now();
     list<int> path = dataset.dijkstra_path(src, trg);
     auto end = chrono::steady_clock::now();
     for(auto iter=path.begin();iter!=path.end();iter++){
-        cout << "Node " << *iter<< endl;
+        cout << "No " << *iter<< endl;
     }
     cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
@@ -58,43 +58,34 @@ void Cenario::Cenario_2_1(int src, int trg) {
 
 void Cenario::Cenario_2_2(int src, int trg) {
     dataset = db.getDataset();
-    int dimension,added_people;
+    int dimension,extra;
     cout<<"Qual a dimensao do grupo desejada: "; cin>>dimension;
-    cout<<"Quantas pessoas quer adicionar ao grupo?: "; cin>>added_people;
+    cout<<"Quantas pessoas quer adicionar ao grupo?: "; cin>>extra;
 
     dataset.addEdge(0,src,dimension,0);
-    int max_flow = dataset.edmonds_karp(src,trg);
+    int max_flow = dataset.edmonds_karp(0,trg);
     cout << max_flow << endl;
     pair<list<int>,int> group;
     list<int>path;
     path.push_back(0);
     group.first=path;
     group.second=max_flow;
-    cout << "Original route: " << endl;
+    cout << "Encaminhamento original: " << endl;
     dataset.print_path(group,trg);
     cout << endl;
-    Graph routeGraph = dataset.createRouteGraph();
-    correctRoute(routeGraph,max_flow,added_people,trg);
-
-}
-
-void Cenario::correctRoute(Graph routeGraph,int previous_flow,int n,int trg){
-    routeGraph.nodes[1].adj.front().capacity+=n;
-    int max_flow = routeGraph.edmonds_karp(1,trg);
-    if(max_flow==previous_flow){
-        cout << "Impossible to correct given route!" << endl;
+    int added_people = dataset.correctRoute(src,trg,extra);
+    if(added_people==0){
+        cout << "Nao e possivel adicionar pessoas ao encaminhamento dado." << endl;
     }
     else{
-        cout << "Added " << max_flow-previous_flow << " people to the given route" << endl;
-        cout << "New route:" << endl;
-        pair<list<int>,int> group;
-        list<int>path;
-        path.push_back(1);
+        cout << added_people << " pessoas foram adicionadas ao encaminhamento." << endl << endl;
+        cout << "Novo encaminhamento: " << endl;
         group.first=path;
-        group.second=max_flow;
-        routeGraph.print_path2(group,trg);
+        group.second=max_flow+added_people;
+        dataset.print_path(group,trg);
     }
 }
+
 
 void Cenario::Cenario_2_3(int src, int trg) {
     dataset = db.getDataset();
@@ -109,7 +100,7 @@ void Cenario::Cenario_2_3(int src, int trg) {
     group.second=max_flow;
     dataset.print_path(group,trg);
     auto end = chrono::steady_clock::now();
-    cout <<endl<<"Max Flow = " <<max_flow << endl;
+    cout <<endl<<"Fluxo Maximo = " <<max_flow << endl;
     cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
 
@@ -133,9 +124,9 @@ void Cenario::Cenario_2_5(int src, int trg) {
     dataset.putInfoOnEdges();
     pair<int,list<int>> waiting_nodes = dataset.getMaxWaitingTime();
     auto end = chrono::steady_clock::now();
-    cout << "People waited " << waiting_nodes.first << " hours in the following nodes" << endl;
+    cout << "Pessoas esperaram " << waiting_nodes.first << " horas nos seguintes nos" << endl;
     for(auto iter=waiting_nodes.second.begin();iter!=waiting_nodes.second.end();iter++){
-        cout << "Node " << *iter << endl;
+        cout << "No " << *iter << endl;
     }
     cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }

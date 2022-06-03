@@ -110,28 +110,6 @@ public:
      * @return returns the bottleneck flow for each augmenting path
      */
     int update_flows(int src,int sink);
-    /**
-     * Simple alterations to the normal bfs
-     * Traverses the nodes using edges with positive flow until it finds the target node v
-     * Time Complexity T(V,E) = O(V+E)
-     * @param v target node, the function will end when this node is visited
-     */
-    void bfs3(int v);
-    /**
-     * Simple alteration to the original print_path
-     * Prints the path of a group that passes through the nodes in the list that is contained
-     * on "key" of the pair
-     * Time Complexity : O(n)= NrElementsInPair * Edges
-     * @param group pair containing the path of a group as it's "key"
-     * and the number of the group as it's value
-     */
-    void print_path2(pair<list<int>,int> group, int trg);
-    /**
-     * Creates a graph which only contains nodes where it's incoming edges on the original graph has positive flow.
-     * Time Complexity T(V,E) = O(V+E)
-     * @return
-     */
-    Graph createRouteGraph();
 
     /**
      * version of dijkstra's algorithm that is needed for scenario 1.2 when we create the restricted graph
@@ -187,6 +165,9 @@ public:
      * @return pair containing the max waiting time as its key and the nodes where that time is waited as it's value
      */
     pair<int,list<int>> getMaxWaitingTime();
+
+
+    int correctRoute(int src,int trg,int extra);
 };
 
 #endif
