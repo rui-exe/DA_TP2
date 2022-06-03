@@ -56,31 +56,112 @@ public:
 
     // Add edge from source to destination with a certain weight
     void addEdge(int src, int dest, int capacity,int duration=0);
+    /**
+     * Traverses the nodes until it finds the target node v
+     * Time Complexity T(V,E) = O(V+E)
+     * @param v target node, the function will end when this node is visited
+     */
     void bfs(int v);
+    /**
+     * Simple alterations to the normal bfs
+     * Traverses the nodes until it finds the target node v
+     * Time Complexity T(V,E) = O(V+E)
+     * @param v target node, the function will end when this node is visited
+     */
     void bfs2(int v);
+    /**
+     * Prints the path of a group that passes through the nodes in the list that is contained
+     * on "key" of the pair
+     * Time Complexity : O(n)= NrElementsInPair * Edges
+     * @param group pair containing the path of a group as it's "key"
+     * and the number of the group as it's value
+     */
     void print_path(pair<list<int>,int> group);
-
+    /**
+     * Algorithm that solves the max flow problem for groups that can separate from each other
+     * It calculates the flow for all of edges of the augmenting paths that connect the src to the sink
+     * Time Complexity: T(V,E) = O(V*E²)
+     * @param src initial node where all the groups depart
+     * @param sink target node where all the groups are destined to arrive
+     * @return Integer indicating the max flow which will be a sum of all the groups dimension that arrive at the sink
+     */
     int edmonds_karp(int src, int sink);
-
-    Graph createRestrictedGraph(int n);
-
+    /**
+     * Creates a new graph containing n*(maxEdges+1) nodes, where n is the number of nodes of the original graph
+     * Time Complexity: T(E,B) = O(E*B), where B is the number of the minimum transshipment's needed
+     * to obtain the max flow in the original graph
+     * @param maxEdges number of the minimum transshipment's needed to obtain the max flow in the original graph
+     * Groups aren't allowed to be separated
+     * @return returns the new graph that was created
+     */
+    Graph createRestrictedGraph(int maxEdges);
+    /**
+     * Function that prints all the pareto optimal alternatives for scenario 1.2.
+     * TimeComplexity T(V,E,B) = O(E*B*log(B*V))
+     */
     void showParetoOptimalPaths();
+    /**
+     * Function that is needed for Edmonds-Karp Algorithm
+     * It updates the flow of the edges of all augmenting paths until no other augmenting path exists
+     * TimeComplexity (V,E) = V+E
+     * @param src source node
+     * @param sink  target node (sink)
+     * @return returns the bottleneck flow for each augmenting path
+     */
     int update_flows(int src,int sink);
-
+    /**
+     * version of dijkstra's algorithm that is needed for scenario 1.2 when we create the restricted graph
+     * it calculates the max flow for each node of that graph and also the edges needed to get there.
+     * TimeComplexity(V,E) = E*log(V)
+     * @param a
+     */
     void dijkstra2(int a);
+    /**
+     * calculates the path from node a to b, using the field pred_d of a node which is calculated by dijkstra 2
+     * TimeComplexity(V) = V , in the worst case
+     * @param a source node
+     * @param b target node
+     * @return list containing the ordered path that one would need to do to arrive at target node, with the max flow
+     */
     list<int> dijkstra_path2(int a,int b);
-
+    /**
+     * Normal version of dijkstra, that was modified in order to return the max distance to the target node
+     * which gives us the max flow from source to the target
+     * TimeComplexity(V,E) = E*log(V)
+     * @param a source node
+     * @param b target node
+     * @return max flow from a to b without the group being able to separate
+     */
     int dijkstra(int a, int b);
+    /**
+     * Calculates the path from node a to b, using the field pred_d of a node which is calculated by dijkstra
+     * * TimeComplexity(V) = V , in the worst case
+     * @param a source node
+     * @param b target node
+     * @return list containing the ordered path that one would need to do to arrive at target node, with the max flow
+     */
     list<int> dijkstra_path(int a, int b);
     /**
-     * Function that invokes the bfs function and returns the best path with less stops made from node a to b.
-     * @param a int representing the starting node we want to calculate the best path from
-     * @param b int representing the final node we want to calculate the best path to
-     * @return list of integers that represent the best path from node a to node b
+     *Traverses the graph in topological order, calculate the earliest start for each activity and places it
+     * on each node.
+     * TimeComplexity T(V,E) = O(V+E)
+     * Then it using that calculates the minimum duration for all the groups to traverse the graph
+     * @return minimum duration for all the groups to traverse the graph
      */
-    list<int> unweighted_path(int a,int b);
     int criticalPath();
+    /**
+     * TimeComplexity T(V,E) = O(V+E)
+     * Places on the edges the information such as the earliest start and earliest finish on the edges
+     * instead of being on the nodes. It facilitates all the calculations we will to do in the future
+     * It also calculates the free slack for each edge.
+     */
     void putInfoOnEdges();
+    /**
+     *It traverses all edges and finds the ones with the biggest free slack, which means that the target node
+     * of those edges will be the nodes where the group will have to wait the maximum amount of time for another group
+     * TimeComplexity T(E) = O(E)
+     * @return pair containing the max waiting time as its key and the nodes where that time is waited as it's value
+     */
     pair<int,list<int>> getMaxWaitingTime();
 };
 

@@ -12,7 +12,11 @@
 #define PARENT(i) ((i)/2)
 
 using namespace std;
-
+/**
+ * This version of a min heap was made by professor Pedro Ribeiro and provided by him in one of his classes of the previous semester
+ * @tparam K
+ * @tparam V
+ */
 // Binary min-heap to represent integer keys of type K with values (priorities) of type V
 template <class K, class V>
 class MinHeap {

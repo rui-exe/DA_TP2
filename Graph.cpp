@@ -295,25 +295,6 @@ list<int> Graph::dijkstra_path(int a, int b) {
     path.push_front(a);
     return path;
 }
-list<int> Graph::unweighted_path(int a,int b){
-    int flow=INT32_MAX/2;
-    list<int> path;
-    bfs2(a);
-    if(!nodes[b].visited)
-        return path;
-    int dest = b;
-    while(dest!=a){
-        if(nodes[dest].incoming_edge->capacity==0){
-            cout << "gg";
-        }
-        flow=min(flow,nodes[dest].incoming_edge->capacity);
-        path.push_front(dest);
-        dest=nodes[dest].pred;
-    }
-    cout << "Flow: "<< flow<<endl;
-    path.push_front(dest);
-    return path;
-}
 
 
 int Graph::criticalPath() {
