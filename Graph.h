@@ -42,6 +42,7 @@ public:
         int es;
         int in_degree;
         int real_node;
+        int route_graph_node;
         int num_edges;
         Edge* incoming_edge;
     };
@@ -108,6 +109,13 @@ public:
      * @param sink  target node (sink)
      * @return returns the bottleneck flow for each augmenting path
      */
+
+    void bfs3(int v);
+    void print_path2(pair<list<int>,int> group);
+
+    Graph createRouteGraph();
+    void correctRoute(Graph routeGraph,int n);
+
     int update_flows(int src,int sink);
     /**
      * version of dijkstra's algorithm that is needed for scenario 1.2 when we create the restricted graph
