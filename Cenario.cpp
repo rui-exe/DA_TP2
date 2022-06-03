@@ -34,7 +34,6 @@ void Cenario::Cenario_1_2() {
 
     auto end = chrono::steady_clock::now();
 
-
     cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
 
