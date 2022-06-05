@@ -61,10 +61,9 @@ void Cenario::Cenario_2_2(int src, int trg) {
     int dimension,extra;
     cout<<"Qual a dimensao do grupo desejada: "; cin>>dimension;
     cout<<"Quantas pessoas quer adicionar ao grupo?: "; cin>>extra;
-
+    auto start = chrono::steady_clock::now();
     dataset.addEdge(0,src,dimension,0);
     int max_flow = dataset.edmonds_karp(0,trg);
-    cout << max_flow << endl;
     pair<list<int>,int> group;
     list<int>path;
     path.push_back(0);
@@ -74,6 +73,7 @@ void Cenario::Cenario_2_2(int src, int trg) {
     dataset.print_path(group,trg);
     cout << endl;
     int added_people = dataset.correctRoute(src,trg,extra);
+    auto end = chrono::steady_clock::now();
     if(added_people==0){
         cout << "Nao e possivel adicionar pessoas ao encaminhamento dado." << endl;
     }
@@ -84,6 +84,7 @@ void Cenario::Cenario_2_2(int src, int trg) {
         group.second=max_flow+added_people;
         dataset.print_path(group,trg);
     }
+    cout << "Tempo de execucao: "<<chrono::duration_cast<chrono::milliseconds>(end - start).count() << " ms"<< endl;
 }
 
 
