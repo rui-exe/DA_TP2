@@ -56,7 +56,10 @@ public:
     Graph(int nodes, bool dir = false);
 
     // Add edge from source to destination with a certain weight
+
     void addEdge(int src, int dest, int capacity,int duration=0);
+
+    void addEdgev2(int src, int dest, int capacity,int duration=0);
     /**
      * Traverses the nodes until it finds the target node v
      * Time Complexity T(V,E) = O(V+E)
@@ -168,6 +171,8 @@ public:
 
 
     int correctRoute(int src,int trg,int extra);
+
+    vector<list<int>> dijkstra_paths_backtrack(int a,int b,int bottleneck,int maxEdges,int nrEdges=0);
 };
 
 #endif
