@@ -15,6 +15,8 @@ void menu(Cenario c){
         cout << "7: 2.5 - Maximo tempo de espera de um grupo num ou mais locais" << endl;
         cout << "8: Sair" << endl;
         cin >> opcao2;
+        if(opcao2==8)
+            return;
         cout << "Indique o nó source: "; cin>>src;
         cout << "Indique o nó sink: "; cin>>trg;
         switch (opcao2) {
@@ -40,14 +42,12 @@ void menu(Cenario c){
             case 7:
                 c.Cenario_2_5(src,trg);
                 break;
-            case 8:
-                break;
             default:
                 cout << "Opcao Invalida, tente de novo" << endl;
                 break;
         }
         cout << endl;
-    }while(!cin.fail() && opcao2!=8 && !cin.eof());
+    }while(!cin.fail() && !cin.eof());
 }
 
 int main() {
