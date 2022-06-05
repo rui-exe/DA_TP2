@@ -39,6 +39,7 @@ public:
         int pred;
         int dist;
         int pred_d;
+        vector<int> predNodes;
         int es;
         int in_degree;
         int real_node;
@@ -125,7 +126,7 @@ public:
      * @param b target node
      * @return list containing the ordered path that one would need to do to arrive at target node, with the max flow
      */
-    list<int> dijkstra_path2(int a,int b);
+    vector<list<int>> dijkstra_paths2(int a,int b);
     /**
      * Normal version of dijkstra, that was modified in order to return the max distance to the target node
      * which gives us the max flow from source to the target

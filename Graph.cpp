@@ -178,13 +178,21 @@ void Graph::showParetoOptimalPaths(int src, int trg){
         if(currentCapacity>lastCapacity){
             lastCapacity = currentCapacity;
             cout << "Encaminhamento com  " << i - 1 << " transbordos - " << "fluxo = " << currentCapacity << endl;
-            list<int> path = restrictedGraph.dijkstra_path2(src, dest);
-            for (auto iter = path.begin(); iter != path.end(); iter++) {
-                if (*iter != *--path.end())
-                    cout << "No " << restrictedGraph.nodes[*iter].real_node << ", ";
-                else
-                    cout << "No " << restrictedGraph.nodes[*iter].real_node;
+            vector<list<int>> paths=restrictedGraph.dijkstra_paths2(src, dest);
+            for(int j=0;j<paths.size();j++) {
+                cout << "Path " << j+1 << endl;
+                list<int> path = paths[j];
+                for (auto iter = path.begin(); iter != path.end(); iter++) {
+                    if (*iter != *--path.end())
+                        cout << "No " << restrictedGraph.nodes[*iter].real_node << ", ";
+                    else
+                        cout << "No " << restrictedGraph.nodes[*iter].real_node;
+                }
+                cout << endl;
+                cout << endl;
             }
+            cout << endl;
+            cout << endl;
             cout << endl;
             cout << endl;
        }
@@ -211,7 +219,8 @@ void Graph::dijkstra2(int a){
             if (min(nodes[c].dist,e.capacity)>nodes[e.dest].dist && e.capacity>0) {
                 nodes[e.dest].dist= min(nodes[c].dist,e.capacity);
                 nodes[e.dest].num_edges=nodes[c].num_edges+1;
-                nodes[e.dest].pred_d=c;
+                nodes[e.dest].predNodes.clear();
+                nodes[e.dest].predNodes.push_back(c);
                 m.decreaseKey(e.dest,{-nodes[e.dest].dist,nodes[e.dest].num_edges});
             }
 
@@ -219,8 +228,12 @@ void Graph::dijkstra2(int a){
                 if(nodes[c].num_edges+1<nodes[e.dest].num_edges){
                     nodes[e.dest].dist= min(nodes[c].dist,e.capacity);
                     nodes[e.dest].num_edges=nodes[c].num_edges+1;
-                    nodes[e.dest].pred_d=c;
+                    nodes[e.dest].predNodes.clear();
+                    nodes[e.dest].predNodes.push_back(c);
                     m.decreaseKey(e.dest,{-nodes[e.dest].dist,nodes[e.dest].num_edges});
+                }
+                else if(nodes[e.dest].num_edges==nodes[c].num_edges+1){
+                    nodes[e.dest].predNodes.push_back(c);
                 }
             }
 
@@ -228,16 +241,23 @@ void Graph::dijkstra2(int a){
     }
 }
 
-list<int> Graph::dijkstra_path2(int a,int b){
-    list<int> path;
-    if(nodes[b].dist==INT32_MAX/2) return path;
+vector<list<int>> Graph::dijkstra_paths2(int a,int b){
     int dest = b;
-    while(dest!=a){
-        path.push_front(dest);
-        dest = nodes[dest].pred_d;
+    vector<list<int>> answer;
+    if(dest==a){
+        answer.push_back(list<int>{a});
+        return answer;
     }
-    path.push_front(a);
-    return path;
+    for(int pred:nodes[dest].predNodes) {
+        list<int> path;
+        path.push_front(dest);
+        vector<list<int>> paths = dijkstra_paths2(a,pred);
+        for(list<int> partOfPath:paths) {
+            path.insert(path.begin(), partOfPath.begin(), partOfPath.end());
+        }
+        answer.push_back(path);
+    }
+    return answer;
 }
 
 
