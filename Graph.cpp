@@ -38,6 +38,10 @@ void Graph::addEdge(int src, int dest, int capacity,int duration) {
     nodes[dest].adj.back().symmetric_edge = &nodes[src].adj.back();
 }
 
+void Graph::addEdgev2(int src, int dest, int capacity,int duration){
+    if (src<0 || src>n || dest<0 || dest>n) return;
+    nodes[src].adj.push_back({dest,0,capacity,duration});
+}
 void Graph::bfs(int v) {
     queue<int> q; // queue of unvisited nodes
     q.push(v);
@@ -152,10 +156,13 @@ Graph Graph::createRestrictedGraph(int maxEdges){
 
     for(int u=1;u<=n;u++){
         for(Edge e:nodes[u].adj){
-            int v = e.dest;
-            for(int b=0;b<=maxEdges;b++){
-                if(b+1<=maxEdges){
-                    restrictedGraph.addEdge((u-1)*(maxEdges+1)+1+b,((v-1)*(maxEdges+1)+1+b)+1,e.capacity);
+            if(e.capacity>0) {
+                int v = e.dest;
+                for (int b = 0; b <= maxEdges; b++) {
+                    if (b + 1 <= maxEdges) {
+                        restrictedGraph.addEdgev2((u - 1) * (maxEdges + 1) + 1 + b,
+                                                  ((v - 1) * (maxEdges + 1) + 1 + b) + 1, e.capacity);
+                    }
                 }
             }
         }
@@ -178,7 +185,8 @@ void Graph::showParetoOptimalPaths(int src, int trg){
         if(currentCapacity>lastCapacity){
             lastCapacity = currentCapacity;
             cout << "Encaminhamento com  " << i - 1 << " transbordos - " << "fluxo = " << currentCapacity << endl;
-            vector<list<int>> paths=restrictedGraph.dijkstra_paths2(src, dest);
+            //vector<list<int>> paths=restrictedGraph.dijkstra_paths2(src, dest);
+            vector<list<int>> paths=restrictedGraph.dijkstra_paths_backtrack(src, dest,currentCapacity,i);
             for(int j=0;j<paths.size();j++) {
                 cout << "Path " << j+1 << endl;
                 list<int> path = paths[j];
@@ -414,5 +422,28 @@ int Graph::correctRoute(int src,int trg,int extra){
     return edmonds_karp(0,trg);
 }
 
+
+vector<list<int>> Graph::dijkstra_paths_backtrack(int a,int b,int bottleneck,int maxEdges,int nrEdges){
+    vector<list<int>> answer;
+    if(a==b){
+        return vector<list<int>>{{a}};
+    }
+    if(nrEdges>maxEdges){
+        return vector<list<int>>{};
+    }
+    for(const Edge& e:nodes[a].adj){
+        if(e.capacity<bottleneck){
+            continue;
+        }
+        else{
+            vector<list<int>> paths = dijkstra_paths_backtrack(e.dest,b,bottleneck,nrEdges+1);
+            for (list<int> path: paths) {
+                path.push_front(a);
+                answer.push_back(path);
+            }
+        }
+    }
+    return answer;
+}
 
 
