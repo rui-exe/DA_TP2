@@ -43,7 +43,6 @@ public:
         int es;
         int in_degree;
         int real_node;
-        int route_graph_node;
         int num_edges;
         Edge* incoming_edge;
     };
@@ -120,11 +119,11 @@ public:
      */
     void dijkstra2(int a);
     /**
-     * calculates the path from node a to b, using the field pred_d of a node which is calculated by dijkstra 2
+     * calculates the path from node a to b, using the field predNods of a node which is calculated by dijkstra 2
      * TimeComplexity(V) = V , in the worst case
      * @param a source node
      * @param b target node
-     * @return list containing the ordered path that one would need to do to arrive at target node, with the max flow
+     * @return vector with lists containing the ordered paths that one would need to do to arrive at target node, with the max flow
      */
     vector<list<int>> dijkstra_paths2(int a,int b);
     /**

@@ -249,13 +249,11 @@ vector<list<int>> Graph::dijkstra_paths2(int a,int b){
         return answer;
     }
     for(int pred:nodes[dest].predNodes) {
-        list<int> path;
-        path.push_front(dest);
-        vector<list<int>> paths = dijkstra_paths2(a,pred);
-        for(list<int> partOfPath:paths) {
-            path.insert(path.begin(), partOfPath.begin(), partOfPath.end());
+        vector<list<int>> paths_to_pred = dijkstra_paths2(a,pred);
+        for(list<int> path_to_pred:paths_to_pred) {
+            path_to_pred.push_back(dest);
+            answer.push_back(path_to_pred); //path to pred + dest = path to dest
         }
-        answer.push_back(path);
     }
     return answer;
 }
