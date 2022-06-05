@@ -75,6 +75,7 @@ public:
      * on "key" of the pair
      * Time Complexity : O(n)= NrElementsInPair * Edges
      * @param group pair containing the path of a group as it's "key"
+     * @param trg target node where all the groups are destined to arrive
      * and the number of the group as it's value
      */
     void print_path(pair<list<int>,int> group,int trg);
@@ -165,8 +166,13 @@ public:
      * @return pair containing the max waiting time as its key and the nodes where that time is waited as it's value
      */
     pair<int,list<int>> getMaxWaitingTime();
-
-
+    /**
+     * Corrects the path by simply adding the extra capacity to the node 0, which is our source.
+     * @param src source node
+     * @param trg target node (sink)
+     * @param extra extra capacity to be added
+     * @return
+     */
     int correctRoute(int src,int trg,int extra);
 };
 
