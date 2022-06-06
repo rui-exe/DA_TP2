@@ -211,7 +211,6 @@ void Graph::showParetoOptimalPaths(int src, int trg){
     bfs2(src);
     int minEdges=nodes[trg].unweighted_distance;
     bfs3(trg);
-    Graph originalGraph = this->originalGraph();
     dijkstra(src,trg);
     unsigned maxEdges = nodes[trg].num_edges;
     Graph restrictedGraph = createRestrictedGraph(maxEdges);
@@ -221,6 +220,7 @@ void Graph::showParetoOptimalPaths(int src, int trg){
         int dest = (trg-1)*(maxEdges+1)+1 +i; //node (dest,i) of restrictedGraph
         int currentCapacity = restrictedGraph.nodes[dest].dist;
         if(currentCapacity>lastCapacity){
+            Graph originalGraph = this->originalGraph();
             lastCapacity = currentCapacity;
             cout << "Encaminhamento com  " << i - 1 << " transbordos - " << "fluxo = " << currentCapacity << endl;
             for(int k=1;k<=n;k++){
@@ -246,10 +246,14 @@ void Graph::showParetoOptimalPaths(int src, int trg){
                 for(int k=1;k<=n;k++){
                     if(!originalGraph.nodes[k].visited && k!=trg) {
                         bool unvisitableNode = true;
-                        for (const Edge &e: originalGraph.nodes[k].adj) {
-                            if (!originalGraph.nodes[e.dest].visited) {
+                        for (auto iter = originalGraph.nodes[k].adj.begin();iter!=originalGraph.nodes[k].adj.end();iter++) {
+                            if (!originalGraph.nodes[iter->dest].visited) {
                                 unvisitableNode = false;
-                                break;
+                            }
+                            else{
+                                auto previous_iter = --iter;
+                                originalGraph.nodes[k].adj.erase(++iter);
+                                iter=previous_iter;
                             }
                         }
                         if (unvisitableNode) {
