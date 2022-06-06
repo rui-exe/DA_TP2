@@ -116,8 +116,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>addEdgev2</b> (int sr
 <tr class="separator:a68dee2186fca9890aecf5ee5c22cb6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adde4d319dd88ea3aa15ab32c265835ad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#adde4d319dd88ea3aa15ab32c265835ad">criticalPath</a> ()</td></tr>
 <tr class="separator:adde4d319dd88ea3aa15ab32c265835ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada3022d342d075116609752210fac9d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#ada3022d342d075116609752210fac9d1">putInfoOnEdges</a> ()</td></tr>
-<tr class="separator:ada3022d342d075116609752210fac9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47bf177af2195a998d1360a14407a6d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a47bf177af2195a998d1360a14407a6d3">putInfoOnEdges</a> (int dest)</td></tr>
+<tr class="separator:a47bf177af2195a998d1360a14407a6d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10f77a8002d5a852391d9d80358f10dd"><td class="memItemLeft" align="right" valign="top">pair&lt; int, list&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a10f77a8002d5a852391d9d80358f10dd">getMaxWaitingTime</a> ()</td></tr>
 <tr class="separator:a10f77a8002d5a852391d9d80358f10dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab748afdb16ae824bc84ed1f3cb1cf7e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#aab748afdb16ae824bc84ed1f3cb1cf7e">correctRoute</a> (int src, int trg, int extra)</td></tr>
@@ -597,8 +597,8 @@ vector&lt; <a class="el" href="struct_graph_1_1_node.html">Node</a> &gt;&#160;</
 
 </div>
 </div>
-<a id="ada3022d342d075116609752210fac9d1" name="ada3022d342d075116609752210fac9d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada3022d342d075116609752210fac9d1">&#9670;&nbsp;</a></span>putInfoOnEdges()</h2>
+<a id="a47bf177af2195a998d1360a14407a6d3" name="a47bf177af2195a998d1360a14407a6d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47bf177af2195a998d1360a14407a6d3">&#9670;&nbsp;</a></span>putInfoOnEdges()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -606,12 +606,18 @@ vector&lt; <a class="el" href="struct_graph_1_1_node.html">Node</a> &gt;&#160;</
         <tr>
           <td class="memname">void Graph::putInfoOnEdges </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>dest</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >TimeComplexity T(V,E) = O(V+E) Places on the edges the information such as the earliest start and earliest finish on the edges instead of being on the nodes. It facilitates all the calculations we will to do in the future It also calculates the free slack for each edge. </p>
+<p >TimeComplexity T(V,E) = O(V+E) Places on the edges the information such as the earliest start and earliest finish on the edges instead of being on the nodes. It facilitates all the calculations we will to do in the future It also calculates the free slack for each edge. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dest</td><td>destination node </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
