@@ -38,7 +38,7 @@ public:
         bool visited;
         int unweighted_distance;
         int unweighted_transposed_distance;
-        int maxCapacity;
+        int maxCapacity ;
         int pred;
         int dist;
         int pred_d;
@@ -164,8 +164,9 @@ public:
      * Places on the edges the information such as the earliest start and earliest finish on the edges
      * instead of being on the nodes. It facilitates all the calculations we will to do in the future
      * It also calculates the free slack for each edge.
+     * @param dest destination node
      */
-    void putInfoOnEdges();
+    void putInfoOnEdges(int dest);
     /**
      *It traverses all edges and finds the ones with the biggest free slack, which means that the target node
      * of those edges will be the nodes where the group will have to wait the maximum amount of time for another group

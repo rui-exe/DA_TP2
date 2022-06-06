@@ -442,7 +442,7 @@ int Graph::criticalPath() {
     return durMin;
 }
 
-void Graph::putInfoOnEdges(){
+void Graph::putInfoOnEdges(int dest){
     for(int i=1;i<=n;i++){
         for(Edge&e:nodes[i].adj){
             if(e.flow>0){
@@ -455,7 +455,7 @@ void Graph::putInfoOnEdges(){
         for(Edge&e1:nodes[i].adj){
             int w=e1.dest;
             if(e1.flow>0){
-                if(w==n){
+                if(w==dest){
                     e1.fs=nodes[w].es-e1.ef;
                 }
                 else {
