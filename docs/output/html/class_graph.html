@@ -87,10 +87,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a24da8efe1f6ea1d93e3c5e7586371e28"><td class="memItemLeft" align="right" valign="top"><a id="a24da8efe1f6ea1d93e3c5e7586371e28" name="a24da8efe1f6ea1d93e3c5e7586371e28"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>addEdge</b> (int src, int dest, int capacity, int duration=0)</td></tr>
 <tr class="separator:a24da8efe1f6ea1d93e3c5e7586371e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88448ff398368f891a440175a2d075a7"><td class="memItemLeft" align="right" valign="top"><a id="a88448ff398368f891a440175a2d075a7" name="a88448ff398368f891a440175a2d075a7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addEdgev2</b> (int src, int dest, int capacity, int duration=0)</td></tr>
+<tr class="separator:a88448ff398368f891a440175a2d075a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1e45e27c60711dadec619ca17e830a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#ae1e45e27c60711dadec619ca17e830a4">bfs</a> (int v)</td></tr>
 <tr class="separator:ae1e45e27c60711dadec619ca17e830a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0610a1300776be699fa5ccde7ac3c898"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a0610a1300776be699fa5ccde7ac3c898">bfs2</a> (int v)</td></tr>
 <tr class="separator:a0610a1300776be699fa5ccde7ac3c898"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaabaf9bff791ebbafef7e3761a1ed1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#aaaabaf9bff791ebbafef7e3761a1ed1f">bfs3</a> (int v)</td></tr>
+<tr class="separator:aaaabaf9bff791ebbafef7e3761a1ed1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0de3a377d5982d23fd9f8dff6e7364cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a0de3a377d5982d23fd9f8dff6e7364cd">print_path</a> (pair&lt; list&lt; int &gt;, int &gt; group, int trg)</td></tr>
 <tr class="separator:a0de3a377d5982d23fd9f8dff6e7364cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf6c247018378464611ccdc580ca8ee3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#aaf6c247018378464611ccdc580ca8ee3">edmonds_karp</a> (int src, int sink)</td></tr>
@@ -117,6 +122,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>addEdge</b> (int src,
 <tr class="separator:a10f77a8002d5a852391d9d80358f10dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab748afdb16ae824bc84ed1f3cb1cf7e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#aab748afdb16ae824bc84ed1f3cb1cf7e">correctRoute</a> (int src, int trg, int extra)</td></tr>
 <tr class="separator:aab748afdb16ae824bc84ed1f3cb1cf7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52715270c97ec98a9bf634c2b0bfcfc9"><td class="memItemLeft" align="right" valign="top">vector&lt; list&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#a52715270c97ec98a9bf634c2b0bfcfc9">dijkstra_paths_backtrack</a> (int a, int b, int bottleneck, int maxEdges, int nrEdges=0)</td></tr>
+<tr class="separator:a52715270c97ec98a9bf634c2b0bfcfc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8f99839d2acc1fac69ef813b2c50f12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graph.html">Graph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_graph.html#ae8f99839d2acc1fac69ef813b2c50f12">originalGraph</a> ()</td></tr>
+<tr class="separator:ae8f99839d2acc1fac69ef813b2c50f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -146,9 +155,9 @@ vector&lt; <a class="el" href="struct_graph_1_1_node.html">Node</a> &gt;&#160;</
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Traverses the nodes until it finds the target node v Time Complexity T(V,E) = O(V+E) </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Traverses the nodes until it starting at v Time Complexity T(V,E) = O(V+E) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">v</td><td>target node, the function will end when this node is visited </td></tr>
+    <tr><td class="paramname">v</td><td>starting node, the function will start on this node and visit the others </td></tr>
   </table>
   </dd>
 </dl>
@@ -170,9 +179,33 @@ vector&lt; <a class="el" href="struct_graph_1_1_node.html">Node</a> &gt;&#160;</
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Simple alterations to the normal bfs Traverses the nodes until it finds the target node v Time Complexity T(V,E) = O(V+E) </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Simple alterations to the normal bfs Traverses the nodes until it starting at v Time Complexity T(V,E) = O(V+E) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">v</td><td>target node, the function will end when this node is visited </td></tr>
+    <tr><td class="paramname">v</td><td>starting node, the function will start on this node and visit the others </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aaaabaf9bff791ebbafef7e3761a1ed1f" name="aaaabaf9bff791ebbafef7e3761a1ed1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaabaf9bff791ebbafef7e3761a1ed1f">&#9670;&nbsp;</a></span>bfs3()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Graph::bfs3 </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Simple alterations to the normal bfs Traverses the nodes until it starting at v Time Complexity T(V,E) = O(V+E) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>starting node, the function will start on this node and visit the others </td></tr>
   </table>
   </dd>
 </dl>
@@ -210,15 +243,15 @@ vector&lt; <a class="el" href="struct_graph_1_1_node.html">Node</a> &gt;&#160;</
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Corrects the path by simply adding the extra capacity to the node 0, which is our source. </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Adds the extra capacity to the edge of node who was created and is only connected to the source. This node now becomes the source. It calculates the flow for all of edges of the augmenting paths that connect the src to the sink Time Complexity: T(V,E) = O(V*E²) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">src</td><td>source node </td></tr>
-    <tr><td class="paramname">trg</td><td>target node (sink) </td></tr>
-    <tr><td class="paramname">extra</td><td>extra capacity to be added </td></tr>
+    <tr><td class="paramname">trg</td><td>target node </td></tr>
+    <tr><td class="paramname">extra</td><td>capacity to be added </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>max_flow of all augmented paths leading to the sink </dd></dl>
 
 </div>
 </div>
@@ -400,6 +433,63 @@ vector&lt; <a class="el" href="struct_graph_1_1_node.html">Node</a> &gt;&#160;</
 
 </div>
 </div>
+<a id="a52715270c97ec98a9bf634c2b0bfcfc9" name="a52715270c97ec98a9bf634c2b0bfcfc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52715270c97ec98a9bf634c2b0bfcfc9">&#9670;&nbsp;</a></span>dijkstra_paths_backtrack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; list&lt; int &gt; &gt; Graph::dijkstra_paths_backtrack </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>bottleneck</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maxEdges</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nrEdges</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Time Complexity: T(V,E) = O(V^E) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>source node </td></tr>
+    <tr><td class="paramname">b</td><td>target node </td></tr>
+    <tr><td class="paramname">bottleneck</td><td>current capacity of the iteration </td></tr>
+    <tr><td class="paramname">maxEdges</td><td>max number of edges of the path for that iteration </td></tr>
+    <tr><td class="paramname">nrEdges</td><td>number of edges used to get to one node. We increment this argument in the recursive calls, when we are checking a node's destination </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a vector containing all the pareto optimal paths or a pareto optimal path to a specific number of transshipment's and flow. </dd></dl>
+
+</div>
+</div>
 <a id="aaf6c247018378464611ccdc580ca8ee3" name="aaf6c247018378464611ccdc580ca8ee3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaf6c247018378464611ccdc580ca8ee3">&#9670;&nbsp;</a></span>edmonds_karp()</h2>
 
@@ -451,6 +541,24 @@ vector&lt; <a class="el" href="struct_graph_1_1_node.html">Node</a> &gt;&#160;</
       </table>
 </div><div class="memdoc">
 <p >It traverses all edges and finds the ones with the biggest free slack, which means that the target node of those edges will be the nodes where the group will have to wait the maximum amount of time for another group TimeComplexity T(E) = O(E) </p><dl class="section return"><dt>Returns</dt><dd>pair containing the max waiting time as its key and the nodes where that time is waited as it's value </dd></dl>
+
+</div>
+</div>
+<a id="ae8f99839d2acc1fac69ef813b2c50f12" name="ae8f99839d2acc1fac69ef813b2c50f12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8f99839d2acc1fac69ef813b2c50f12">&#9670;&nbsp;</a></span>originalGraph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_graph.html">Graph</a> Graph::originalGraph </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Similar to the original graph but with no residual (symmetrical_edge) edges. </p><dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_graph.html">Graph</a> with no residual edges and equal to the original graph. </dd></dl>
 
 </div>
 </div>

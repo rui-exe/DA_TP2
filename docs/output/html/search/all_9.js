@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['update_5fflows_0',['update_flows',['../class_graph.html#a962d94760274978cac87b834d62122cc',1,'Graph']]]
+  ['showparetooptimalpaths_0',['showParetoOptimalPaths',['../class_graph.html#acfd7a48bd5afd98ce9a19cc2970d0767',1,'Graph']]]
 ];
