@@ -57,31 +57,36 @@ public:
 
     // Constructor: nr nodes and direction (default: undirected)
     Graph(int nodes, bool dir = false);
-
     // Add edge from source to destination with a certain weight
-
     void addEdge(int src, int dest, int capacity,int duration=0);
-
+    // Add edge from source to destination with a certain weight
     void addEdgev2(int src, int dest, int capacity,int duration=0);
     /**
-     * Traverses the nodes until it finds the target node v
+     * Traverses the nodes until it starting at v
      * Time Complexity T(V,E) = O(V+E)
-     * @param v target node, the function will end when this node is visited
+     * @param v starting node, the function will start on this node and visit the others
      */
     void bfs(int v);
     /**
      * Simple alterations to the normal bfs
-     * Traverses the nodes until it finds the target node v
+     * Traverses the nodes until it starting at v
      * Time Complexity T(V,E) = O(V+E)
-     * @param v target node, the function will end when this node is visited
+     * @param v starting node, the function will start on this node and visit the others
      */
     void bfs2(int v);
+    /**
+     * Simple alterations to the normal bfs
+     * Traverses the nodes until it starting at v
+     * Time Complexity T(V,E) = O(V+E)
+     * @param v starting node, the function will start on this node and visit the others
+     */
     void bfs3(int v);
     /**
      * Prints the path of a group that passes through the nodes in the list that is contained
      * on "key" of the pair
      * Time Complexity : O(n)= NrElementsInPair * Edges
      * @param group pair containing the path of a group as it's "key"
+     * @param trg target node where all the groups are destined to arrive
      * and the number of the group as it's value
      */
     void print_path(pair<list<int>,int> group,int trg);
@@ -175,11 +180,33 @@ public:
      */
     pair<int,list<int>> getMaxWaitingTime();
 
-
+    /**
+     * Adds the extra capacity to the edge of node who was created and is only connected to the source. This node now becomes the source.
+     * It calculates the flow for all of edges of the augmenting paths that connect the src to the sink
+     * Time Complexity: T(V,E) = O(V*E²)
+     * @param src source node
+     * @param trg target node
+     * @param extra capacity to be added
+     * @return max_flow of all augmented paths leading to the sink
+     */
     int correctRoute(int src,int trg,int extra);
 
+    /**
+     *
+     * Time Complexity: T(V,E) = O(V^E)
+     * @param a source node
+     * @param b target node
+     * @param bottleneck current capacity of the iteration
+     * @param maxEdges max number of edges of the path for that iteration
+     * @param nrEdges number of edges used to get to one node. We increment this argument in the recursive calls, when
+     * we are checking a node's destination
+     * @return a vector containing all the pareto optimal paths or a pareto optimal path to a specific number of transshipment's and flow.
+     */
     vector<list<int>> dijkstra_paths_backtrack(int a,int b,int bottleneck,int maxEdges,int nrEdges=0);
-
+    /**
+     * Similar to the original graph but with no residual (symmetrical_edge) edges.
+     * @return Graph with no residual edges and equal to the original graph.
+     */
     Graph originalGraph();
 };
 

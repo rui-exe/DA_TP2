@@ -17,8 +17,8 @@ void menu(Cenario c){
         cin >> opcao2;
         if(opcao2==8)
             return;
-        cout << "Indique o nó source: "; cin>>src;
-        cout << "Indique o nó sink: "; cin>>trg;
+        cout << "Indique o no source: "; cin>>src;
+        cout << "Indique o no sink: "; cin>>trg;
         switch (opcao2) {
 
             case 1:
