@@ -229,13 +229,20 @@ void Graph::showParetoOptimalPaths(int src, int trg){
                                                      originalGraph.nodes[k].unweighted_transposed_distance > i;
 
                     originalGraph.nodes[k].visited = originalGraph.nodes[k].visited || originalGraph.nodes[k].maxCapacity<currentCapacity;
+                    for (auto iter = originalGraph.nodes[k].adj.begin();iter!=originalGraph.nodes[k].adj.end();iter++) {
+                        if (iter->capacity<currentCapacity) {
+                            auto previous_iter = --iter;
+                            originalGraph.nodes[k].adj.erase(++iter);
+                            iter=previous_iter;
+                        }
+                    }
                 }
                 else
                     originalGraph.nodes[k].visited=false;
             }
-            int x=1;
-            while(x>0){
-                x=0;
+            int nodesMarkVisited=1;
+            while(nodesMarkVisited>0){
+                nodesMarkVisited=0;
                 for(int k=1;k<=n;k++){
                     if(!originalGraph.nodes[k].visited && k!=trg) {
                         bool unvisitableNode = true;
@@ -247,12 +254,11 @@ void Graph::showParetoOptimalPaths(int src, int trg){
                         }
                         if (unvisitableNode) {
                             originalGraph.nodes[k].visited = true;
-                            x++;
+                            nodesMarkVisited++;
                         }
                     }
                 }
             }
-            cout << "Ended marking nodes as visited " << endl;
 
             vector<list<int>> paths = originalGraph.dijkstra_paths_backtrack(src, trg,currentCapacity,i);
             for(int j=0;j<paths.size();j++) {
@@ -495,13 +501,11 @@ vector<list<int>> Graph::dijkstra_paths_backtrack(int a,int b,int bottleneck,int
     if(a==b){
         return vector<list<int>>{{a}};
     }
-    bool validNode=false;
     for(const Edge& e:nodes[a].adj){
-        if(e.capacity<bottleneck || nodes[e.dest].visited){
+        if(nodes[e.dest].visited){
             continue;
         }
         else{
-            validNode=true;
             if(nodes[e.dest].unweighted_transposed_distance+nrEdges+1<=maxEdges) {
                 vector<list<int>> paths = dijkstra_paths_backtrack(e.dest, b, bottleneck, maxEdges, nrEdges + 1);
                 for (list<int> path: paths) {
@@ -511,8 +515,6 @@ vector<list<int>> Graph::dijkstra_paths_backtrack(int a,int b,int bottleneck,int
             }
         }
     }
-    if(!validNode)
-        nodes[a].visited=true;
     return answer;
 }
 
