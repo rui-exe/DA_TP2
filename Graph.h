@@ -37,6 +37,8 @@ public:
         list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited;
         int unweighted_distance;
+        int unweighted_transposed_distance;
+        int maxCapacity;
         int pred;
         int dist;
         int pred_d;
@@ -176,6 +178,8 @@ public:
     int correctRoute(int src,int trg,int extra);
 
     vector<list<int>> dijkstra_paths_backtrack(int a,int b,int bottleneck,int maxEdges,int nrEdges=0);
+
+    Graph originalGraph();
 };
 
 #endif
