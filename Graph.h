@@ -7,6 +7,7 @@
 #include <queue>
 #include <iostream>
 #include <map>
+#include <unordered_set>
 #include "minHeap.h"
 
 using namespace std;
@@ -73,6 +74,7 @@ public:
      * @param v target node, the function will end when this node is visited
      */
     void bfs2(int v);
+    void bfs3(int v);
     /**
      * Prints the path of a group that passes through the nodes in the list that is contained
      * on "key" of the pair
@@ -121,6 +123,7 @@ public:
      * @param a
      */
     void dijkstra2(int a);
+
     /**
      * calculates the path from node a to b, using the field predNods of a node which is calculated by dijkstra 2
      * TimeComplexity(V) = V , in the worst case

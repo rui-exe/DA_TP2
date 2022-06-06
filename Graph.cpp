@@ -60,7 +60,27 @@ void Graph::bfs(int v) {
         }
     }
 }
-
+void Graph::bfs3(int v) {
+    nodes[v].unweighted_distance=0;
+    for (int i=0; i<=n; i++)
+        nodes[i].visited = false;
+    queue<int> q; // queue of unvisited nodes
+    q.push(v);
+    nodes[v].visited = true;
+    while (!q.empty()) { // while there are still unvisited nodes
+        int u = q.front(); q.pop();
+        for (auto& e : nodes[u].adj) {
+            int w = e.dest;
+            if (!nodes[w].visited && e.capacity==0) {
+                q.push(w);
+                nodes[w].visited = true;
+                nodes[w].unweighted_distance = nodes[u].unweighted_distance+1;
+                nodes[w].pred = u;
+                nodes[w].incoming_edge = &e;
+            }
+        }
+    }
+}
 
 
 void Graph::bfs2(int v) {
@@ -174,6 +194,7 @@ Graph Graph::createRestrictedGraph(int maxEdges){
 void Graph::showParetoOptimalPaths(int src, int trg){
     bfs2(src);
     int minEdges=nodes[trg].unweighted_distance;
+    bfs3(trg);
     dijkstra(src,trg);
     unsigned maxEdges = nodes[trg].num_edges;
     Graph restrictedGraph = createRestrictedGraph(maxEdges);
@@ -185,16 +206,16 @@ void Graph::showParetoOptimalPaths(int src, int trg){
         if(currentCapacity>lastCapacity){
             lastCapacity = currentCapacity;
             cout << "Encaminhamento com  " << i - 1 << " transbordos - " << "fluxo = " << currentCapacity << endl;
+            vector<list<int>> paths=dijkstra_paths_backtrack(src, trg,currentCapacity,i);
             //vector<list<int>> paths=restrictedGraph.dijkstra_paths2(src, dest);
-            vector<list<int>> paths=restrictedGraph.dijkstra_paths_backtrack(src, dest,currentCapacity,i);
             for(int j=0;j<paths.size();j++) {
                 cout << "Path " << j+1 << endl;
                 list<int> path = paths[j];
                 for (auto iter = path.begin(); iter != path.end(); iter++) {
                     if (*iter != *--path.end())
-                        cout << "No " << restrictedGraph.nodes[*iter].real_node << ", ";
+                        cout << "No " << *iter<< ", ";
                     else
-                        cout << "No " << restrictedGraph.nodes[*iter].real_node;
+                        cout << "No " << *iter;
                 }
                 cout << endl;
                 cout << endl;
@@ -206,7 +227,6 @@ void Graph::showParetoOptimalPaths(int src, int trg){
        }
     }
 }
-
 void Graph::dijkstra2(int a){
     for(int i=0;i<nodes.size();i++){
         this->nodes[i].dist = 0;
@@ -428,7 +448,7 @@ vector<list<int>> Graph::dijkstra_paths_backtrack(int a,int b,int bottleneck,int
     if(a==b){
         return vector<list<int>>{{a}};
     }
-    if(nrEdges>maxEdges){
+    if(nodes[a].unweighted_distance+nrEdges>maxEdges || nrEdges==maxEdges){
         return vector<list<int>>{};
     }
     for(const Edge& e:nodes[a].adj){
@@ -436,7 +456,7 @@ vector<list<int>> Graph::dijkstra_paths_backtrack(int a,int b,int bottleneck,int
             continue;
         }
         else{
-            vector<list<int>> paths = dijkstra_paths_backtrack(e.dest,b,bottleneck,nrEdges+1);
+            vector<list<int>> paths = dijkstra_paths_backtrack(e.dest,b,bottleneck,maxEdges,nrEdges+1);
             for (list<int> path: paths) {
                 path.push_front(a);
                 answer.push_back(path);
